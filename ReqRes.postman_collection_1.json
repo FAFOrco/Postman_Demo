@@ -1,0 +1,157 @@
+{
+	"info": {
+		"_postman_id": "c213b54f-9612-4847-94e1-2e20edcc82e9",
+		"name": "ReqRes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "GetUsers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.warn(\"Hola mundo!!!\")",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"//Tomamos el valor del Response de forma GLOBAL en jsonData",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Validacion del Response\", function () {",
+									"    pm.expect(jsonData.page).eql(2);",
+									"    pm.expect(jsonData.per_page).eql(6);",
+									"    pm.expect(jsonData.total).eql(12);",
+									"    pm.expect(jsonData.total_pages).eql(2);",
+									"});",
+									"",
+									"pm.test(\"Valida Usuario\", function() {",
+									"    var rUser = jsonData.data.find(x => x.first_name == \"Byron\"); //Asignamos el valor del array cuyo first_name se Byron a rUser",
+									"    pm.expect(rUser).not.to.be.undefined; //Verificamos que la variable rUser tenga un valor",
+									"    pm.expect(rUser.email).eql(\"byron.fields@reqres.in\");",
+									"    pm.expect(rUser.avatar).contains(\"10-image.jpg\");",
+									"    console.log(rUser);",
+									"});",
+									"",
+									"",
+									"/*",
+									"    pm.expect(jsonData.data[0].id).to.eql(7);",
+									"    pm.expect(jsonData.data[0].email).to.string(\"michael.lawson@reqres.in\");",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/users?page=2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201 or 202\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{nombre}}\",\n    \"job\": \"{{trabajo}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/users",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RegisterUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    //pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"eve.holt@reqres.in\",\n    \"password\": \"pistol\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/register",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,12 @@
+[
+	{
+		"nombre": "Pepitox",
+		"trabajo": "Developer",
+		"cod_rta": 200
+	},
+	{
+		"nombre": "Floricienta",
+		"trabajo": "Tester",
+		"cod_rta": 201
+	}
+]
